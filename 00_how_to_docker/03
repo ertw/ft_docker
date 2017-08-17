@@ -1,0 +1,1 @@
+eval $(docker-machine -s /tmp/docker env Char)
