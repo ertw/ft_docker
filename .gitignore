@@ -1,0 +1,6 @@
+test.*
+._*
+*.DS_Store
+.nfs*
+*.swp
+*.output
