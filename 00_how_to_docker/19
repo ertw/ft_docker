@@ -1,0 +1,7 @@
+mkdir /tmp/HOME
+echo "<h1>Hello from Flask</h1>" > /tmp/HOME/index.html
+docker run -dit \
+--name Abathur \
+-v /tmp/HOME:/root \
+-p 3000:3000 \
+python:2-slim
