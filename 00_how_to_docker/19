@@ -1,7 +1,16 @@
+# TODO: figure out why flask isn't happy
 mkdir /tmp/HOME
+
 echo "<h1>Hello from Flask</h1>" > /tmp/HOME/index.html
-docker run -dit \
+
+docker run -dt --rm \
 --name Abathur \
 -v /tmp/HOME:/root \
 -p 3000:3000 \
 python:2-slim
+
+docker exec -it Abathur apt-get update -y
+docker exec -it Abathur apt-get install -y python-setuptools python-dev build-essential
+docker exec -it Abathur easy_install pip
+docker exec -it Abathur pip install Flask
+docker exec -it Abathur python -m flask run --host=0.0.0.0 --port=3000

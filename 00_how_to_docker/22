@@ -1,0 +1,12 @@
+# get the token
+token=$(docker-machine --storage-path /tmp/docker \
+ssh Char "docker swarm join-token -q worker")
+
+# get the ip of leader (Char)
+ip=$(docker-machine --storage-path /tmp/docker \
+ip Char)
+
+# add Aiur to swarm
+docker-machine --storage-path /tmp/docker ssh Aiur "docker swarm join \
+--token $token \
+$ip:2377"
