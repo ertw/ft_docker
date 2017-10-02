@@ -3,4 +3,4 @@ docker service create \
 --network overmind \
 -e RABBITMQ_DEFAULT_USER=bunny \
 -e RABBITMQ_DEFAULT_PASS=hare \
-rabitmq
+rabbitmq
