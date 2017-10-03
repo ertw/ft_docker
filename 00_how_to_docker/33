@@ -1,1 +1,1 @@
-docker container prune --force
+docker image rm -f $(docker image ls -qa)
