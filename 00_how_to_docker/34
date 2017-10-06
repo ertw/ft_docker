@@ -1,1 +1,1 @@
-docker-machine rm Aiur --force
+docker-machine --storage-path /tmp/docker rm Aiur --force
