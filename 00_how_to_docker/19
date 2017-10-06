@@ -1,16 +1,29 @@
-# TODO: figure out why flask isn't happy
-mkdir /tmp/HOME
+# create a HOME dir on the docker-machine host
+docker-machine --storage-path /tmp/docker ssh Char mkdir /home/docker/HOME
 
-echo "<h1>Hello from Flask</h1>" > /tmp/HOME/index.html
+# copy my flask entrypoint in
+docker-machine --storage-path /tmp/docker scp ./hello.py Char:/home/docker/HOME
 
-docker run -dt --rm \
---name Abathur \
--v /tmp/HOME:/root \
--p 3000:3000 \
-python:2-slim
+# create container
+docker run -dt --rm --name Abathur -v /home/docker/HOME:/app -p 3000:3000 python:2-slim
 
+# install packages and start server
 docker exec -it Abathur apt-get update -y
 docker exec -it Abathur apt-get install -y python-setuptools python-dev build-essential
 docker exec -it Abathur easy_install pip
 docker exec -it Abathur pip install Flask
-docker exec -it Abathur python -m flask run --host=0.0.0.0 --port=3000
+docker exec -it --env FLASK_APP=/app/hello.py Abathur flask run --host=0.0.0.0 --port=3000
+
+# this is the Dockerfile that accomplishes the same:
+# FROM python:2-slim
+# RUN \
+# 	apt-get update
+# RUN \
+# 	apt-get install -y \
+# 	python-setuptools \
+# 	python-dev \
+# 	build-essential \
+# 	&& easy_install pip \
+# 	&& pip install Flask
+# ENV FLASK_APP=hello.py
+# WORKDIR /app
